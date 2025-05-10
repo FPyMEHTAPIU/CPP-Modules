@@ -7,8 +7,10 @@ PhoneBook::PhoneBook(): index(0) {
 }
 
 void PhoneBook::addNewContact(Contact newContact) {
-	contactList[index % 8] = newContact;
+	contactList[index] = newContact;
 	++index;
+	if (index == 8)
+		index = 0;
 }
 
 Contact PhoneBook::findContactByIndex(int index) {

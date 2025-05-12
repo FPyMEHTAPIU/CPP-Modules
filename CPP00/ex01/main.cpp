@@ -5,7 +5,7 @@
 #include <string>
 
 void search(PhoneBook &phonebook) {
-	int curIndex = phonebook.getIndex();
+	int contactsNumber = phonebook.countContacts();
 	std::string input;
 	int	indexToSearch;
 	Contact contact;
@@ -20,7 +20,7 @@ void search(PhoneBook &phonebook) {
 		<< std::setw(WIDTH) << format_field("Nickname")<< "|"
 		<< std::endl;
 
-	for (int i = 0; i < curIndex; ++i) {
+	for (int i = 0; i < contactsNumber; ++i) {
 		print_contact_short(phonebook.findContactByIndex(i), i);
 	}
 

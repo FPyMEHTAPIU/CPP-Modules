@@ -4,8 +4,8 @@
 
 class PhoneBook {
 	private:
-		Contact contactList[8];
-		int index;
+		Contact _contactList[8];
+		int _index;
 	
 	public:
 		PhoneBook();
@@ -13,6 +13,7 @@ class PhoneBook {
 		Contact findContactByIndex(int index);
 		int getIndex() const;
 		bool isContactListEmpty();
+		int	countContacts();
 
 	private:
 		void fillContact();

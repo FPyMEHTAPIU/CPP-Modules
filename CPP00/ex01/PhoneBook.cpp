@@ -1,17 +1,17 @@
 #include "PhoneBook.hpp"
 #include "utils.hpp"
 
-PhoneBook::PhoneBook(): index(0) {
+PhoneBook::PhoneBook(): _index(0) {
 	for (int i = 0; i < 8; ++i) {
-		contactList[i].setFirstName("");
+		_contactList[i].setFirstName("");
 	}
 }
 
 void PhoneBook::addNewContact() {
 	fillContact();
-	++index;
-	if (index == 8)
-		index = 0;
+	++_index;
+	if (_index == 8)
+		_index = 0;
 }
 
 Contact PhoneBook::findContactByIndex(int index) {
@@ -19,19 +19,27 @@ Contact PhoneBook::findContactByIndex(int index) {
 	if (index < 0 || index >= 8) {
 		std::cout << "Invalid index" << std::endl;
 		return (tempContact);
-	} else if (contactList[index].getFirstName() == "") {
+	} else if (_contactList[index].getFirstName() == "") {
 		std::cout << "The contact doesn't exist!" << std::endl;
 		return (tempContact);
 	}
-	return (contactList[index]);
+	return (_contactList[index]);
 }
 
-int PhoneBook::getIndex() const {
-	return (index);
+int	PhoneBook::countContacts() {
+	int	count = 0;
+
+	for (Contact &contact: _contactList) {
+		if (contact.getFirstName() != "")
+			count++;
+		else
+			break;
+	}
+	return (count);
 }
 
 void PhoneBook::fillContact() {
-	Contact& contact = contactList[index];
+	Contact& contact = _contactList[_index];
 
 	for (int i = 0; i < 5; ++i) {
 		write_field(contact, i);
@@ -39,5 +47,5 @@ void PhoneBook::fillContact() {
 }
 
 bool PhoneBook::isContactListEmpty() {
-	return (contactList[0].getFirstName() == "");
+	return (_contactList[0].getFirstName() == "");
 }

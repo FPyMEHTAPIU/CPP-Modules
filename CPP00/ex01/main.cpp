@@ -6,8 +6,14 @@
 
 void search(PhoneBook &phonebook) {
 	int curIndex = phonebook.getIndex();
+	std::string input;
 	int	indexToSearch;
+	Contact contact;
 
+	if (phonebook.isContactListEmpty()) {
+		std::cout << "The phonebook is empty!" << std::endl;
+		return ;
+	}
 	std::cout << std::setw(WIDTH) << format_field("Index") << "|"
 		<< std::setw(WIDTH) << format_field("First name") << "|"
 		<< std::setw(WIDTH) << format_field("Last name") << "|"
@@ -18,13 +24,16 @@ void search(PhoneBook &phonebook) {
 		print_contact_short(phonebook.findContactByIndex(i), i);
 	}
 
-	std::cout << "Enter an index to get full information about a user" << std::endl;
-	std::cin >> indexToSearch;
-	Contact contact = phonebook.findContactByIndex(indexToSearch);
-	while (contact.getFirstName() == "") {
-		std::cin >> indexToSearch;
-		contact = phonebook.findContactByIndex(indexToSearch);
-	}
+	do {
+		std::cout << "Enter an index to get full information about a user" << std::endl;
+		try {
+			std::cin >> input;
+			indexToSearch = std::stoi(input);
+			contact = phonebook.findContactByIndex(indexToSearch);
+		} catch (const std::invalid_argument &) {
+			std::cout << "The value must be decimal!" << std::endl;
+		}
+	} while (contact.getFirstName() == "");
 	std::cin.ignore();
 	print_contact_full(contact, indexToSearch);
 }

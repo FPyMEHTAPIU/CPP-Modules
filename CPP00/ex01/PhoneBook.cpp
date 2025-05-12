@@ -37,3 +37,7 @@ void PhoneBook::fillContact() {
 		write_field(contact, i);
 	}
 }
+
+bool PhoneBook::isContactListEmpty() {
+	return (contactList[0].getFirstName() == "");
+}

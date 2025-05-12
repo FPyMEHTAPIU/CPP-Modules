@@ -23,6 +23,10 @@ Contact &PhoneBook::findContactByIndex(int index) {
 	return (contactList[index]);
 }
 
+int PhoneBook::getIndex() const {
+	return (index);
+}
+
 void PhoneBook::fillContact() {
 	Contact& contact = contactList[index];
 

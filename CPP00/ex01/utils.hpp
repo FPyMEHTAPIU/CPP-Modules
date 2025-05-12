@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "Contact.hpp"
 
-Contact write_field(const std::string fieldName, Contact &contact);
+void write_field(Contact &contact, const int& i);

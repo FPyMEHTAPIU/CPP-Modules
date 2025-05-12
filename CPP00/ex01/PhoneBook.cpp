@@ -24,11 +24,9 @@ Contact &PhoneBook::findContactByIndex(int index) {
 }
 
 void PhoneBook::fillContact() {
-	Contact &contact = contactList[index];
+	Contact& contact = contactList[index];
 
-	write_field("First name", contact);
-	write_field("Last name", contact);
-	write_field("Nickname", contact);
-	write_field("Phone number", contact);
-	write_field("Darkest secret", contact);
+	for (int i = 0; i < 5; ++i) {
+		write_field(contact, i);
+	}
 }

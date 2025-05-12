@@ -1,27 +1,55 @@
 #include "PhoneBook.hpp"
 
-static void choose_and_set_field(const std::string fieldName, Contact &contact, std::string &input) {
-	if (fieldName == "First name") {
+void choose_and_set_field(Contact& contact, std::string& input, const int& i) {
+	switch (i)
+	{
+	case 0:
 		contact.setFirstName(input);
-	} else if (fieldName == "Last name") {
+		break;
+	case 1:
 		contact.setLastName(input);
-	} else if (fieldName == "Nickname") {
+		break;
+	case 2:
 		contact.setNickname(input);
-	} else if (fieldName == "Phone number") {
+		break;
+	case 3:
 		contact.setPhoneNumber(input);
-	} else if (fieldName == "Darkest secret") {
+		break;
+	case 4:
 		contact.setDarkestSecret(input);
+		break;
+	default:
+		break;
 	}
 }
 
-void write_field(const std::string fieldName, Contact &contact) {
+void write_field(Contact &contact, const int& i) {
 	std::string input;
 
-	std::cout << "Enter " << fieldName << std::endl;
+	switch (i)
+	{
+	case 0:
+		std::cout << "Enter first name" << std::endl;
+		break;
+	case 1:
+		std::cout << "Enter last name" << std::endl;
+		break;
+	case 2:
+		std::cout << "Enter nickname" << std::endl;
+		break;
+	case 3:
+		std::cout << "Enter phone number" << std::endl;
+		break;
+	case 4:
+		std::cout << "Enter darkest secret" << std::endl;
+		break;
+	default:
+		break;
+	}
 	getline(std::cin, input);
 	while (input.empty()) {
-		std::cout << fieldName << " cannot be empty!\n";
+		std::cout << "This field cannot be empty!\n";
 		getline(std::cin, input);
 	}
-	choose_and_set_field(fieldName, contact, input);
+	choose_and_set_field(contact, input, i);
 }

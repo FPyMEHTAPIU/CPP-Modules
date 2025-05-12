@@ -14,11 +14,14 @@ void PhoneBook::addNewContact() {
 		index = 0;
 }
 
-Contact &PhoneBook::findContactByIndex(int index) {
+Contact PhoneBook::findContactByIndex(int index) {
+	Contact tempContact;
 	if (index < 0 || index >= 8) {
 		std::cout << "Invalid index" << std::endl;
+		return (tempContact);
 	} else if (contactList[index].getFirstName() == "") {
 		std::cout << "The contact doesn't exist!" << std::endl;
+		return (tempContact);
 	}
 	return (contactList[index]);
 }

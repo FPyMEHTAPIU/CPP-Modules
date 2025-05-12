@@ -1,3 +1,4 @@
+#include "utils.hpp"
 #include "PhoneBook.hpp"
 
 void choose_and_set_field(Contact& contact, std::string& input, const int& i) {
@@ -52,4 +53,29 @@ void write_field(Contact &contact, const int& i) {
 		getline(std::cin, input);
 	}
 	choose_and_set_field(contact, input, i);
+}
+
+std::string format_field(const std::string& str) {
+	if (str.length() > 10) {
+		return (str.substr(0, WIDTH - 1) + ".");
+	}
+	return (str);
+}
+
+void print_contact_short(Contact contact, const int &index) {
+	std::cout << std::setw(WIDTH) << format_field(std::to_string(index)) << "|"
+		<< std::setw(WIDTH) << format_field(contact.getFirstName()) << "|"
+		<< std::setw(WIDTH) << format_field(contact.getLastName()) << "|"
+		<< std::setw(WIDTH) << format_field(contact.getNickname())<< "|"
+		<< std::endl;
+}
+
+void print_contact_full(Contact contact, const int &index) {
+	std::cout << "Index: " << std::to_string(index) << "\n"
+		<< "First name: " << contact.getFirstName() << "\n"
+		<< "Last name: " << contact.getLastName() << "\n"
+		<< "Nickname: " << contact.getNickname() << "\n"
+		<< "Phone number" << contact.getPhoneNumber() << "\n"
+		<< "Darkest secret: " <<  contact.getDarkestSecret()
+		<< std::endl;
 }

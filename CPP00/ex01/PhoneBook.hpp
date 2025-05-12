@@ -10,7 +10,7 @@ class PhoneBook {
 	public:
 		PhoneBook();
 		void addNewContact();
-		Contact &findContactByIndex(int index);
+		Contact findContactByIndex(int index);
 		int getIndex() const;
 
 	private:

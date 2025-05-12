@@ -1,27 +1,13 @@
 #include "PhoneBook.hpp"
+#include "utils.hpp"
 #include <iostream>
 #include <iomanip>
 #include <string>
 
-const int WIDTH = 10;
-
-static std::string format_field(const std::string& str) {
-	if (str.length() > 10) {
-		return (str.substr(0, WIDTH - 1) + ".");
-	}
-	return (str);
-}
-
-void print_contact_short(Contact contact, const int &index) {
-	std::cout << std::setw(WIDTH) << format_field(std::to_string(index)) << "|"
-		<< std::setw(WIDTH) << format_field(contact.getFirstName()) << "|"
-		<< std::setw(WIDTH) << format_field(contact.getLastName()) << "|"
-		<< std::setw(WIDTH) << format_field(contact.getNickname())<< "|"
-		<< std::endl;
-}
-
 void search(PhoneBook &phonebook) {
 	int curIndex = phonebook.getIndex();
+	int	indexToSearch;
+
 	std::cout << std::setw(WIDTH) << format_field("Index") << "|"
 		<< std::setw(WIDTH) << format_field("First name") << "|"
 		<< std::setw(WIDTH) << format_field("Last name") << "|"
@@ -31,6 +17,16 @@ void search(PhoneBook &phonebook) {
 	for (int i = 0; i < curIndex; ++i) {
 		print_contact_short(phonebook.findContactByIndex(i), i);
 	}
+
+	std::cout << "Enter an index to get full information about a user" << std::endl;
+	std::cin >> indexToSearch;
+	Contact contact = phonebook.findContactByIndex(indexToSearch);
+	while (contact.getFirstName() == "") {
+		std::cin >> indexToSearch;
+		contact = phonebook.findContactByIndex(indexToSearch);
+	}
+	std::cin.ignore();
+	print_contact_full(contact, indexToSearch);
 }
 
 int main() {

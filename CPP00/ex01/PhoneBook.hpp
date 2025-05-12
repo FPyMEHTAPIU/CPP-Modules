@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "Contact.hpp"
 
 class PhoneBook {
@@ -9,6 +8,9 @@ class PhoneBook {
 	
 	public:
 		PhoneBook();
-		void addNewContact(Contact newContact);
-		Contact findContactByIndex(int index);
+		void addNewContact();
+		Contact &findContactByIndex(int index);
+
+	private:
+		void fillContact();
 };

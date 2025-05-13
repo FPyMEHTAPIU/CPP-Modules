@@ -52,6 +52,12 @@ void write_field(Contact &contact, const int& i) {
 		std::cout << "This field cannot be empty!\n";
 		getline(std::cin, input);
 	}
+	if (i == 3) {
+		while (!isValidPhoneNumber(input)) {
+			std::cout << "Phone number is invalid!\n";
+			getline(std::cin, input);
+		}
+	}
 	choose_and_set_field(contact, input, i);
 }
 
@@ -66,8 +72,7 @@ void print_contact_short(Contact contact, const int &index) {
 	std::cout << std::setw(WIDTH) << format_field(std::to_string(index)) << "|"
 		<< std::setw(WIDTH) << format_field(contact.getFirstName()) << "|"
 		<< std::setw(WIDTH) << format_field(contact.getLastName()) << "|"
-		<< std::setw(WIDTH) << format_field(contact.getNickname())<< "|"
-		<< std::endl;
+		<< std::setw(WIDTH) << format_field(contact.getNickname())<< std::endl;
 }
 
 void print_contact_full(Contact contact, const int &index) {
@@ -75,7 +80,20 @@ void print_contact_full(Contact contact, const int &index) {
 		<< "First name: " << contact.getFirstName() << "\n"
 		<< "Last name: " << contact.getLastName() << "\n"
 		<< "Nickname: " << contact.getNickname() << "\n"
-		<< "Phone number" << contact.getPhoneNumber() << "\n"
+		<< "Phone number: " << contact.getPhoneNumber() << "\n"
 		<< "Darkest secret: " <<  contact.getDarkestSecret()
 		<< std::endl;
+}
+
+bool isValidPhoneNumber(const std::string& number) {
+    if (number.size() <= 1)
+        return (false);
+    size_t i = 0;
+    if (number[0] == '+')
+        ++i;
+    for (; i < number.size(); ++i) {
+        if (!isdigit(number[i]))
+            return (false);
+    }
+    return (true);
 }

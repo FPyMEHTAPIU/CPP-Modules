@@ -17,8 +17,7 @@ void search(PhoneBook &phonebook) {
 	std::cout << std::setw(WIDTH) << format_field("Index") << "|"
 		<< std::setw(WIDTH) << format_field("First name") << "|"
 		<< std::setw(WIDTH) << format_field("Last name") << "|"
-		<< std::setw(WIDTH) << format_field("Nickname")<< "|"
-		<< std::endl;
+		<< std::setw(WIDTH) << format_field("Nickname")<< std::endl;
 
 	for (int i = 0; i < contactsNumber; ++i) {
 		print_contact_short(phonebook.findContactByIndex(i), i);
@@ -48,14 +47,16 @@ int main() {
 		if (!getline(std::cin, input)) {
 			std::cout << "EOF reached!" << std::endl;
 			break;
-		} else if (input.empty()) {
+		} else if (input.empty())
 			continue;
-		} else if (input == "ADD") {
+		else if (input == "ADD")
 			phonebook.addNewContact();
-		} else if (input == "SEARCH") {
+		else if (input == "SEARCH")
 			search(phonebook);
-		} else if (input == "EXIT")
+		else if (input == "EXIT")
 			break;
+		else
+			std::cout << "Invalid command!" << std::endl;
 	}
 	return (0);
 }

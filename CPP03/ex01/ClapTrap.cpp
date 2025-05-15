@@ -12,7 +12,7 @@ ClapTrap::ClapTrap(std::string name):
 }
 
 ClapTrap::ClapTrap(const ClapTrap& clapTrap) {
-	std::cout << "ClapTrap " << name << " created by copy constructor!" << std::endl;
+	std::cout << "ClapTrap " << _name << " created by copy constructor!" << std::endl;
 	*this = clapTrap;
 }
 

@@ -23,5 +23,5 @@ class ClapTrap {
 		int	getDamage() const;
 		int	getEnergy() const;
 		std::string getName() const;
-		virtual void status() const;
+		void status() const;
 };

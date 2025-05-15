@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 static void check_attack(ClapTrap& attacker, ClapTrap& victim) {
 	if (attacker.getEnergy() > 0) {
@@ -18,9 +19,16 @@ static void check_attack_scavtrap(ScavTrap& attacker, ScavTrap& victim) {
 		attacker.attack(victim.getName());
 }
 
+static void check_attack_fragtrap(FragTrap& attacker, FragTrap& victim) {
+	if (attacker.getEnergy() > 0) {
+		attacker.attack(victim.getName());
+		victim.takeDamage(attacker.getDamage());
+	} else
+		attacker.attack(victim.getName());
+}
+
 int main() {
 	ClapTrap a("Mike"), b("Nick"), c("Duke");
-	ScavTrap d("Joel"), f("Rick");
 
 	a.attack("Nick");
 	b.takeDamage(a.getDamage());
@@ -51,6 +59,8 @@ int main() {
 	
 	std::cout << "\nNow it's time to ScavTrap tests!\n";
 
+	ScavTrap d("Joel"), f("Rick");
+
 	check_attack_scavtrap(d, f);
 	d.status();
 	f.status();
@@ -62,5 +72,14 @@ int main() {
 	check_attack_scavtrap(f, d);
 	d.status();
 	f.status();
+
+	std::cout << "\nNow it's time to FragTrap tests!\n";
+
+	FragTrap fr1("Sofia"), fr2("Clem");
+	check_attack_fragtrap(fr1, fr2);
+	fr1.status();
+	fr2.status();
+	fr2.highFivesGuys();
+
 	return 0;
 }

@@ -2,6 +2,8 @@
 #include "Animal.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 
 int main()
 {
@@ -17,5 +19,12 @@ int main()
 	delete meta;
 	delete j;
 	delete i;
+
+	std::cout << "Mutation is in process..." << std::endl;
+
+	const WrongAnimal *probablyCat = new WrongCat();
+	std::cout << probablyCat->getType() << " " << std::endl;
+	probablyCat->makeSound();
+	delete probablyCat;
 	return 0;
 }

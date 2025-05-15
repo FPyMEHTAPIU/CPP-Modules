@@ -18,5 +18,5 @@ Cat& Cat::operator=(Cat const& cat) {
 }
 
 void Cat::makeSound() const {
-	std::cout << "Meeeoww :3" << std::endl;
+	std::cout << "=^..^= Meeeoww" << std::endl;
 }

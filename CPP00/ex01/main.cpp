@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <string>
 
-void search(PhoneBook &phonebook) {
+static void search(PhoneBook &phonebook) {
 	int contactsNumber = phonebook.countContacts();
 	std::string input;
 	int	indexToSearch;
@@ -26,7 +26,7 @@ void search(PhoneBook &phonebook) {
 	do {
 		std::cout << "Enter an index to get full information about a user" << std::endl;
 		try {
-			std::cin >> input;
+			getline(std::cin, input);
 			if (std::cin.eof()) {
 				std::cout << "EOF reached!" << std::endl;
 				exit (0);
@@ -39,7 +39,6 @@ void search(PhoneBook &phonebook) {
 			std::cout << "The value is out of range!" << std::endl;
 		}
 	} while (contact.getFirstName() == "");
-	std::cin.ignore();
 	print_contact_full(contact, indexToSearch);
 }
 

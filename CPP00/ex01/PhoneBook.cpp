@@ -42,7 +42,10 @@ void PhoneBook::fillContact() {
 	Contact& contact = _contactList[_index];
 
 	for (int i = 0; i < 5; ++i) {
-		write_field(contact, i);
+		if (!write_field(contact, i)) {
+			std::cout << "EOF reached!" << std::endl;
+			exit (0);
+		}
 	}
 }
 

@@ -27,10 +27,16 @@ void search(PhoneBook &phonebook) {
 		std::cout << "Enter an index to get full information about a user" << std::endl;
 		try {
 			std::cin >> input;
+			if (std::cin.eof()) {
+				std::cout << "EOF reached!" << std::endl;
+				exit (0);
+			}
 			indexToSearch = std::stoi(input);
 			contact = phonebook.findContactByIndex(indexToSearch);
 		} catch (const std::invalid_argument &) {
 			std::cout << "The value must be decimal!" << std::endl;
+		} catch (const std::out_of_range &) {
+			std::cout << "The value is out of range!" << std::endl;
 		}
 	} while (contact.getFirstName() == "");
 	std::cin.ignore();

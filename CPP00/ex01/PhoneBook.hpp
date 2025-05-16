@@ -11,7 +11,6 @@ class PhoneBook {
 		PhoneBook();
 		void addNewContact();
 		Contact findContactByIndex(int index);
-		int getIndex() const;
 		bool isContactListEmpty();
 		int	countContacts();
 

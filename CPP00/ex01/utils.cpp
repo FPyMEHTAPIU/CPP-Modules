@@ -24,7 +24,7 @@ void choose_and_set_field(Contact& contact, std::string& input, const int& i) {
 	}
 }
 
-void write_field(Contact &contact, const int& i) {
+bool write_field(Contact &contact, const int& i) {
 	std::string input;
 
 	switch (i)
@@ -48,17 +48,21 @@ void write_field(Contact &contact, const int& i) {
 		break;
 	}
 	getline(std::cin, input);
+	if (std::cin.eof())	return false;
 	while (input.empty()) {
 		std::cout << "This field cannot be empty!\n";
 		getline(std::cin, input);
+		if (std::cin.eof())	return false;
 	}
 	if (i == 3) {
 		while (!isValidPhoneNumber(input)) {
 			std::cout << "Phone number is invalid!\n";
 			getline(std::cin, input);
+			if (std::cin.eof())	return false;
 		}
 	}
 	choose_and_set_field(contact, input, i);
+	return true;
 }
 
 std::string format_field(const std::string& str) {

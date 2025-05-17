@@ -34,16 +34,21 @@ static void copyReplaceData(std::string filename, std::ifstream& file, std::stri
 int main(int ac, char *av[]) {
 	if (ac != 4) {
 		std::cerr << "Invalid number of arguments" << std::endl;
-		return (1);
+		return 1;
+	}
+	std::string s1 = av[2], s2 = av[3];
+	if (s1.empty() || s2.empty()) {
+		std::cout << "Strings cannot be empty!" << std::endl;
+		return 1;
 	}
 	std::ifstream myfile;
 	myfile.open(av[1]);
 
 	if (!myfile) {
 		std::cerr << "Cannot open the file" << std::endl;
-		return (1);
+		return 1;
 	}
 
 	copyReplaceData(av[1], myfile, av[2], av[3]);
-	return (0);
+	return 0;
 }

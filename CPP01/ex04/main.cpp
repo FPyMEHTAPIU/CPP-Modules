@@ -7,6 +7,7 @@ static void copyReplaceData(std::string filename, std::ifstream& file, std::stri
 	std::ofstream newFile(newFilename);
 	
 	if (!newFile) {
+		file.close();
 		std::cerr << "Cannot create the file" << std::endl;
 		exit(1);
 	}

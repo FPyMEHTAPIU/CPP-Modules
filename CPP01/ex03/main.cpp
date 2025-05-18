@@ -19,6 +19,15 @@ int main()
 		club.setType("some other type of club");
 		jim.attack();
 	}
+	{
+		HumanB ike("Ike");
+		ike.attack();
+		Weapon club = Weapon("metal pipe");
+		ike.setWeapon(club);
+		ike.attack();
+		club.setType("wooden leg");
+		ike.attack();
+	}
 
 	return 0;
 }

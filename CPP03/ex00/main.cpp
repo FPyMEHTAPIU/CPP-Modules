@@ -34,6 +34,9 @@ int main() {
 	c.status();
 	a.status();
 
+	b.setDamage(5);
+	check_attack(b, a);
+
 	a.beRepaired(1);
 	a.beRepaired(2);
 	a.beRepaired(8);

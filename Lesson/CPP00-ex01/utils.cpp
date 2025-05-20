@@ -1,4 +1,5 @@
 #include "PhoneBook.hpp"
+#include "utils.hpp"
 
 static void choose_and_set_field(const std::string fieldName, Contact &contact, std::string &input) {
 	if (fieldName == "First name") {
@@ -14,7 +15,7 @@ static void choose_and_set_field(const std::string fieldName, Contact &contact, 
 	}
 }
 
-void write_field(const char* fieldName, Contact &contact) {
+void write_field(const std::string fieldName, Contact &contact) {
 	std::string input;
 
 	std::cout << "Enter " << fieldName << std::endl;

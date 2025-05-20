@@ -82,6 +82,10 @@ void ClapTrap::beRepaired(unsigned int amount) {
 	_energyPoints--;
 }
 
+int	ClapTrap::getHitPoints() const {
+	return _hitPoints;
+}
+
 void ClapTrap::setDamage(const int damage) {
 	_attackDamage = damage;
 }

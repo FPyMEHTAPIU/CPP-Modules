@@ -2,8 +2,13 @@
 #include "ClapTrap.hpp"
 
 static void check_attack(ClapTrap& attacker, ClapTrap& victim) {
-	if (attacker.getEnergy() > 0) {
+	if (victim.getHitPoints() <= 0) {
+		std::cout << "ClapTrap " << victim.getName() << " is dead!" << std::endl;
+		return ;
+	} else if (attacker.getEnergy() > 0) {
 		attacker.attack(victim.getName());
+		if (attacker.getHitPoints() <= 0)
+			return ;
 		victim.takeDamage(attacker.getDamage());
 	} else
 		attacker.attack(victim.getName());

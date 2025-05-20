@@ -4,24 +4,39 @@
 #include "FragTrap.hpp"
 
 static void check_attack(ClapTrap& attacker, ClapTrap& victim) {
-	if (attacker.getEnergy() > 0) {
+	if (victim.getHitPoints() <= 0) {
+		std::cout << "ClapTrap " << victim.getName() << " is dead!" << std::endl;
+		return ;
+	} else if (attacker.getEnergy() > 0) {
 		attacker.attack(victim.getName());
+		if (attacker.getHitPoints() <= 0)
+			return ;
 		victim.takeDamage(attacker.getDamage());
 	} else
 		attacker.attack(victim.getName());
 }
 
 static void check_attack_scavtrap(ScavTrap& attacker, ScavTrap& victim) {
-	if (attacker.getEnergy() > 0) {
+	if (victim.getHitPoints() <= 0) {
+		std::cout << "ScavTrap " << victim.getName() << " is dead!" << std::endl;
+		return ;
+	} else if (attacker.getEnergy() > 0) {
 		attacker.attack(victim.getName());
+		if (attacker.getHitPoints() <= 0)
+			return ;
 		victim.takeDamage(attacker.getDamage());
 	} else
 		attacker.attack(victim.getName());
 }
 
 static void check_attack_fragtrap(FragTrap& attacker, FragTrap& victim) {
-	if (attacker.getEnergy() > 0) {
+	if (victim.getHitPoints() <= 0) {
+		std::cout << "FragTrap " << victim.getName() << " is dead!" << std::endl;
+		return ;
+	} else if (attacker.getEnergy() > 0) {
 		attacker.attack(victim.getName());
+		if (attacker.getHitPoints() <= 0)
+			return ;
 		victim.takeDamage(attacker.getDamage());
 	} else
 		attacker.attack(victim.getName());
@@ -77,6 +92,10 @@ int main() {
 
 	FragTrap fr1("Sofia"), fr2("Clem");
 	check_attack_fragtrap(fr1, fr2);
+	check_attack_fragtrap(fr1, fr2);
+	check_attack_fragtrap(fr1, fr2);
+	check_attack_fragtrap(fr1, fr2);
+	check_attack_fragtrap(fr2, fr1);
 	fr1.status();
 	fr2.status();
 	fr2.highFivesGuys();

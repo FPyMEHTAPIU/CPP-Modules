@@ -27,7 +27,11 @@ FragTrap::~FragTrap() {
 }
 
 void FragTrap::attack(const std::string& target) {
-	if (_energyPoints == 0) {
+	if (_hitPoints == 0) {
+		std::cout << "FragTrap " << _name << " died and cannot attack!"
+			<< std::endl;
+		return ;
+	} else if (_energyPoints == 0) {
 		std::cout << "FragTrap " << _name << " is out of energy!"
 			<< std::endl;
 		return ;
@@ -39,13 +43,24 @@ void FragTrap::attack(const std::string& target) {
 }
 
 void FragTrap::takeDamage(unsigned int amount) {
+	if (_hitPoints == 0) {
+		std::cout << "FragTrap " << _name << " died and cannot take damage!"
+			<< std::endl;
+		return ;
+	}
 	std::cout << "FragTrap " << _name << " taken " << amount
 		 << " points of damage!" << std::endl;
 	_hitPoints -= amount;
+	if (_hitPoints < 0)
+		_hitPoints = 0;
 }
 
 void FragTrap::beRepaired(unsigned int amount) {
-	if (_energyPoints == 0) {
+	if (_hitPoints == 0) {
+		std::cout << "FragTrap " << _name << " died and cannot heal!"
+			<< std::endl;
+		return ;
+	} else if (_energyPoints == 0) {
 		std::cout << "FragTrap " << _name << " is out of energy!"
 			<< std::endl;
 		return ;

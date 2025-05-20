@@ -3,16 +3,26 @@
 #include "ScavTrap.hpp"
 
 static void check_attack(ClapTrap& attacker, ClapTrap& victim) {
-	if (attacker.getEnergy() > 0) {
+	if (victim.getHitPoints() <= 0) {
+		std::cout << "ClapTrap " << victim.getName() << " is dead!" << std::endl;
+		return ;
+	} else if (attacker.getEnergy() > 0) {
 		attacker.attack(victim.getName());
+		if (attacker.getHitPoints() <= 0)
+			return ;
 		victim.takeDamage(attacker.getDamage());
 	} else
 		attacker.attack(victim.getName());
 }
 
 static void check_attack_scavtrap(ScavTrap& attacker, ScavTrap& victim) {
-	if (attacker.getEnergy() > 0) {
+	if (victim.getHitPoints() <= 0) {
+		std::cout << "ScavTrap " << victim.getName() << " is dead!" << std::endl;
+		return ;
+	} else if (attacker.getEnergy() > 0) {
 		attacker.attack(victim.getName());
+		if (attacker.getHitPoints() <= 0)
+			return ;
 		victim.takeDamage(attacker.getDamage());
 	} else
 		attacker.attack(victim.getName());
@@ -60,6 +70,8 @@ int main() {
 	check_attack_scavtrap(f, d);
 	check_attack_scavtrap(f, d);
 	check_attack_scavtrap(f, d);
+	check_attack_scavtrap(f, d);
+	d.beRepaired(50);
 	d.status();
 	f.status();
 	return 0;

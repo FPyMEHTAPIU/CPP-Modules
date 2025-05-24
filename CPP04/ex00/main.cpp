@@ -16,9 +16,9 @@ int main()
 	j->makeSound();
 	meta->makeSound();
 
-	delete meta;
-	delete j;
 	delete i;
+	delete j;
+	delete meta;
 
 	std::cout << "Mutation is in process..." << std::endl;
 

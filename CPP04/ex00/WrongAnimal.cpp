@@ -1,12 +1,16 @@
 #include "WrongAnimal.hpp"
 
-WrongAnimal::WrongAnimal() {}
+WrongAnimal::WrongAnimal() {
+	std::cout << "Wrong animal constructor called" << std::endl;
+}
 
 WrongAnimal::WrongAnimal(WrongAnimal const& animal) {
 	*this = animal;
 }
 
-WrongAnimal::~WrongAnimal() {}
+WrongAnimal::~WrongAnimal() {
+	std::cout << "Wrong animal destructor called" << std::endl;
+}
 
 WrongAnimal& WrongAnimal::operator=(WrongAnimal const& animal) {
 	if (this != &animal) {

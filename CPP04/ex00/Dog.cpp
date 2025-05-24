@@ -2,13 +2,16 @@
 
 Dog::Dog(): Animal() {
 	type = "Dog";
+	std::cout << type << " constructor called" << std::endl;
 }
 
 Dog::Dog(Dog const& dog): Animal(dog) {
 	*this = dog;
 }
 
-Dog::~Dog() {}
+Dog::~Dog() {
+	std::cout << type << " destructor called" << std::endl;
+}
 
 Dog& Dog::operator=(Dog const& dog) {
 	if (this != &dog) {

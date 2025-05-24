@@ -2,8 +2,8 @@
 
 Cat::Cat(): Animal() {
 	type = "Cat";
-	_brain = new Brain();
 	std::cout << "Cat with a brain constructor" << std::endl;
+	_brain = new Brain();
 }
 
 Cat::Cat(Cat const& cat): Animal(cat) {

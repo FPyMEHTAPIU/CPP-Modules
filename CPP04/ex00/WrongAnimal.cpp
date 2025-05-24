@@ -19,7 +19,9 @@ WrongAnimal& WrongAnimal::operator=(WrongAnimal const& animal) {
 	return *this;
 }
 
-void WrongAnimal::makeSound() const {}
+void WrongAnimal::makeSound() const {
+	std::cout << "Ƹ̵̡Ӝ̵̨̄Ʒ  Meow?" << std::endl;
+}
 
 std::string WrongAnimal::getType() const {
 	return type;

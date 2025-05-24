@@ -1,12 +1,16 @@
 #include "Brain.hpp"
 
-Brain::Brain() {}
+Brain::Brain() {
+	std::cout << "Brain constructor called" << std::endl;
+}
 
 Brain::Brain(Brain const& copy) {
 	*this = copy;
 }
 
-Brain::~Brain() {}
+Brain::~Brain() {
+	std::cout << "Brain destructor called" << std::endl;
+}
 
 Brain& Brain::operator=(Brain const& brain) {
 	if (this != &brain) {

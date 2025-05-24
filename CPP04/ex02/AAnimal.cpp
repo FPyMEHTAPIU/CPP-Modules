@@ -1,12 +1,16 @@
 #include "AAnimal.hpp"
 
-AAnimal::AAnimal() {}
+AAnimal::AAnimal() {
+	std::cout << "AAnimal constructor called" << std::endl;
+}
 
 AAnimal::AAnimal(AAnimal const& animal) {
 	*this = animal;
 }
 
-AAnimal::~AAnimal() {}
+AAnimal::~AAnimal() {
+	std::cout << "AAnimal destructor called" << std::endl;
+}
 
 AAnimal& AAnimal::operator=(AAnimal const& animal) {
 	if (this != &animal) {

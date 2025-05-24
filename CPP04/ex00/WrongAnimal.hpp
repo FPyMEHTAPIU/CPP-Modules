@@ -10,6 +10,6 @@ class WrongAnimal {
 		WrongAnimal(WrongAnimal const& animal);
 		virtual ~WrongAnimal();
 		WrongAnimal& operator=(WrongAnimal const& animal);
-		virtual void makeSound() const;
+		void makeSound() const;
 		std::string getType() const;
 };

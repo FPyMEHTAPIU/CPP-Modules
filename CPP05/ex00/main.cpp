@@ -1,0 +1,56 @@
+#include "Bureaucrat.hpp"
+
+int main() {
+	try {
+		Bureaucrat borya(4);
+		Bureaucrat vitya(155);
+
+
+	} catch (std::exception& e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		Bureaucrat borya(1);
+		
+		borya.increaseGrade();
+
+	} catch (std::exception& e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		Bureaucrat ilya(150);
+		
+		ilya.decreaseGrade();
+
+	} catch (std::exception& e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		Bureaucrat kolya(5);
+		
+		kolya.increaseGrade();
+		kolya.increaseGrade();
+		kolya.increaseGrade();
+		kolya.increaseGrade();
+		std::cout << kolya.getName() << "'s grade is " 
+			<< kolya.getGrade() << std::endl;
+
+	} catch (std::exception& e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		Bureaucrat gradeless;
+		
+		std::cout << gradeless.getName() << "'s grade is " 
+			<< gradeless.getGrade() << std::endl;
+
+	} catch (std::exception& e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	return 0;
+}

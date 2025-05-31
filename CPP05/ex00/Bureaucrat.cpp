@@ -1,16 +1,16 @@
 #include "Bureaucrat.hpp"
 
-const char* GradeTooHighException::what() const throw() {
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
 	return "The grade is too high, provide something above 1!";
 }
 
-const char* GradeTooLowException::what() const throw() {
+const char* Bureaucrat::GradeTooLowException::what() const throw() {
 	return "The grade is too high, provide something bellow 150!";
 }
 
-Bureaucrat::Bureaucrat(): _grade(MIN_GRADE) {}
+Bureaucrat::Bureaucrat(): _NAME("Buddy"), _grade(MIN_GRADE) {}
 
-Bureaucrat::Bureaucrat(Bureaucrat const& other) {
+Bureaucrat::Bureaucrat(Bureaucrat const& other): _NAME(other._NAME) {
 	*this = other;
 }
 
@@ -21,7 +21,7 @@ Bureaucrat& Bureaucrat::operator=(Bureaucrat const& other) {
 	return *this;
 }
 
-Bureaucrat::Bureaucrat(const int grade) {
+Bureaucrat::Bureaucrat(std::string name, const int grade): _NAME(name) {
 	if (grade < MAX_GRADE) {
 		throw GradeTooHighException();
 	} else if (grade > MIN_GRADE) {
@@ -33,7 +33,7 @@ Bureaucrat::Bureaucrat(const int grade) {
 Bureaucrat::~Bureaucrat() {}
 
 const std::string& Bureaucrat::getName() const {
-	return _name;
+	return _NAME;
 }
 
 const int& Bureaucrat::getGrade() const {

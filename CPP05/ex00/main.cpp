@@ -2,8 +2,8 @@
 
 int main() {
 	try {
-		Bureaucrat borya(4);
-		Bureaucrat vitya(155);
+		Bureaucrat borya("Borya", 4);
+		Bureaucrat vitya("Vitya", 155);
 
 
 	} catch (std::exception& e) {
@@ -11,7 +11,7 @@ int main() {
 	}
 
 	try {
-		Bureaucrat borya(1);
+		Bureaucrat borya("Borya", 1);
 		
 		borya.increaseGrade();
 
@@ -20,7 +20,7 @@ int main() {
 	}
 
 	try {
-		Bureaucrat ilya(150);
+		Bureaucrat ilya("Ilya", 150);
 		
 		ilya.decreaseGrade();
 
@@ -29,7 +29,7 @@ int main() {
 	}
 
 	try {
-		Bureaucrat kolya(5);
+		Bureaucrat kolya("Kolya", 5);
 		
 		kolya.increaseGrade();
 		kolya.increaseGrade();

@@ -17,7 +17,7 @@ SRCS = \
 
 OBJS = $(SRCS:.cpp=.o)
 
-FLAGS = -std=c++20 -Wall -Werror -Wextra -g
+FLAGS = -std=c++20 -Wall -Werror -Wextra
 
 RM = rm -rf
 

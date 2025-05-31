@@ -9,12 +9,15 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-NAME = maggots
+NAME = form28B
 
 SRCS = \
+	AForm.cpp \
 	Bureaucrat.cpp \
-	Form.cpp \
-	main.cpp 
+	main.cpp \
+	PresidentialPardonForm.cpp \
+	RobotomyRequestForm.cpp \
+	ShrubberyCreationForm.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -27,7 +30,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(BLUE)🛠  Compiling maggots... 🛠$(DEF_COLOR)"
+	@echo "$(BLUE)🛠  Compiling form28B... 🛠$(DEF_COLOR)"
 	@c++ $(FLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)🥳 Success!🥳$(DEF_COLOR)"
 
@@ -39,7 +42,7 @@ clean:
 	@$(RM) $(OBJS)
 
 fclean: clean
-	@echo "$(RED)🪦 Deleting maggots... 🪦$(DEF_COLOR)"
+	@echo "$(RED)🪦 Deleting form28B... 🪦$(DEF_COLOR)"
 	@$(RM) $(NAME)
 	@echo "$(RED)☣️  CLEAR ☣️$(DEF_COLOR)"
 

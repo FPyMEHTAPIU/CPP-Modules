@@ -5,8 +5,11 @@ const char* Bureaucrat::GradeTooHighException::what() const throw() {
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
-	return "The grade is too low, provide something bellow 150!";
+	return _message.c_str();
 }
+
+Bureaucrat::GradeTooLowException::GradeTooLowException(std::string message):
+	_message(message) {}
 
 Bureaucrat::Bureaucrat(): _NAME("Buddy"), _grade(MIN_GRADE) {}
 
@@ -25,7 +28,7 @@ Bureaucrat::Bureaucrat(std::string name, const int grade): _NAME(name) {
 	if (grade < MAX_GRADE) {
 		throw GradeTooHighException();
 	} else if (grade > MIN_GRADE) {
-		throw GradeTooLowException();
+		throw GradeTooLowException("The grade is too low, provide something bellow 150!");
 	}
 	_grade = grade;
 }
@@ -53,6 +56,15 @@ void Bureaucrat::increaseGrade() {
 
 void Bureaucrat::decreaseGrade() {
 	if (_grade == 150)
-		throw GradeTooLowException();
+		throw GradeTooLowException("The grade is the lowest possible ever. The bottom has reached :(");
 	_grade++;
+}
+
+void Bureaucrat::signForm(Form& form) {
+	try {
+		form.beSigned(*this);
+	} catch (std::exception& e) {
+		std::cout << _NAME <<  " couldn't sign " << form.getName()
+			<< " because " << e.what() << std::endl;
+	}
 }

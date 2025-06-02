@@ -7,7 +7,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target):
 
 void ShrubberyCreationForm::execute(Bureaucrat const& executor) const {
 	if (executor.getGrade() > this->getGradeToExec())
-		throw GradeTooLowException("Your grade is not enough to execute in ShrubberyCreationForm");
+		throw GradeTooLowException("the grade is not enough to execute in ShrubberyCreationForm");
 
 	std::ofstream file(_target + "_shrubbery");
 	if (file.fail()) {

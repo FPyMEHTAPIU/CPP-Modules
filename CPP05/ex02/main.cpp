@@ -14,23 +14,26 @@ int main() {
 		std::cout << "\n=== ShrubberyCreationForm ===\n";
 		ShrubberyCreationForm shrubForm("home");
 		std::cout << shrubForm << std::endl;
-		shrubForm.beSigned(joe);
+		joe.signForm(shrubForm);
 		joe.executeForm(shrubForm); // not enough exec grade
 		bob.executeForm(shrubForm); // success, creates file
+		std::cout << shrubForm << std::endl;
 
 		std::cout << "\n=== RobotomyRequestForm ===\n";
 		RobotomyRequestForm robotForm("Bender");
 		std::cout << robotForm << std::endl;
-		robotForm.beSigned(tim);
+		tim.signForm(robotForm);
 		for (int i = 0; i < 4; ++i) {
 			bob.executeForm(robotForm); // try multiple times
 		}
+		std::cout << robotForm << std::endl;
 
 		std::cout << "\n=== PresidentialPardonForm ===\n";
 		PresidentialPardonForm pardonForm("Arthur Dent");
 		std::cout << pardonForm << std::endl;
-		pardonForm.beSigned(bob);
+		//pardonForm.beSigned(bob);
 		bob.executeForm(pardonForm); // success
+		std::cout << pardonForm << std::endl;
 
 		std::cout << "\n=== Not Signed Form ===\n";
 		PresidentialPardonForm notSignedForm("Zaphod");

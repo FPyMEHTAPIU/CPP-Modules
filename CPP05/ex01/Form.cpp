@@ -21,12 +21,12 @@ Form::Form(std::string name, int gradeToSign, int gradeToExec):
 	if (gradeToSign < MAX_GRADE || gradeToExec < MAX_GRADE) {
 		throw GradeTooHighException();
 	} else if (gradeToSign > MIN_GRADE || gradeToExec > MIN_GRADE) {
-		throw GradeTooLowException("The grade is too low, provide something bellow 150!");
+		throw GradeTooLowException("the grade is too low, provide something bellow 150!");
 	}
 }
 
 const char* Form::GradeTooHighException::what() const throw() {
-	return "The grade is too high, provide something above 1!";
+	return "Form::GradeTooHighException";
 }
 
 const char* Form::GradeTooLowException::what() const throw() {
@@ -38,7 +38,7 @@ Form::GradeTooLowException::GradeTooLowException(std::string message):
 
 void Form::beSigned(const Bureaucrat& bureaucrat) {
 	if (bureaucrat.getGrade() > _GRADE_TO_SIGN) {
-		throw GradeTooLowException("The grade is lower than required to sign. Sorry.");
+		throw GradeTooLowException("the grade is lower than required to sign. Sorry.");
 	}
 	_isSigned = true;
 	std::cout << bureaucrat.getName() << " signed " << _NAME << std::endl;
@@ -62,7 +62,7 @@ const int& Form::getGradeToExec() const {
 
 std::ostream& operator<<(std::ostream &out, Form const& form) {
 	out << "Form name: " << form.getName() << "\n"
-		<< "Signed status: " << form.getIsSigned() << "\n"
+		<< "Signed status: " << (form.getIsSigned() ? "yes" : "no") << "\n"
 		<< "Grade to sign: " << form.getGradeToSign() << "\n"
 		<< "Grade to exec: " << form.getGradeToExec();
 	return out; 

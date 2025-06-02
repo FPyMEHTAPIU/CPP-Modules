@@ -5,7 +5,6 @@ int main() {
 		Bureaucrat borya("Borya", 4);
 		Bureaucrat vitya("Vitya", 155);
 
-
 	} catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
 	}
@@ -35,8 +34,7 @@ int main() {
 		kolya.increaseGrade();
 		kolya.increaseGrade();
 		kolya.increaseGrade();
-		std::cout << kolya.getName() << "'s grade is " 
-			<< kolya.getGrade() << std::endl;
+		std::cout << kolya << std::endl;
 
 	} catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
@@ -45,8 +43,7 @@ int main() {
 	try {
 		Bureaucrat gradeless;
 		
-		std::cout << gradeless.getName() << "'s grade is " 
-			<< gradeless.getGrade() << std::endl;
+		std::cout << gradeless << std::endl;
 
 	} catch (std::exception& e) {
 		std::cout << e.what() << std::endl;

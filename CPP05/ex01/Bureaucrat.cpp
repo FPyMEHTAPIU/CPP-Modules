@@ -1,7 +1,7 @@
 #include "Bureaucrat.hpp"
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
-	return "The grade is too high, provide something above 1!";
+	return "Bureaucrat::GradeTooHighException";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
@@ -28,7 +28,7 @@ Bureaucrat::Bureaucrat(std::string name, const int grade): _NAME(name) {
 	if (grade < MAX_GRADE) {
 		throw GradeTooHighException();
 	} else if (grade > MIN_GRADE) {
-		throw GradeTooLowException("The grade is too low, provide something bellow 150!");
+		throw GradeTooLowException("the grade is too low, provide something bellow 150!");
 	}
 	_grade = grade;
 }
@@ -44,7 +44,7 @@ const int& Bureaucrat::getGrade() const {
 }
 
 std::ostream& operator<<(std::ostream &out, Bureaucrat const& bureaucrat) {
-	out << bureaucrat.getGrade();
+	out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << ".";
 	return out;
 }
 
@@ -56,7 +56,7 @@ void Bureaucrat::increaseGrade() {
 
 void Bureaucrat::decreaseGrade() {
 	if (_grade == 150)
-		throw GradeTooLowException("The grade is the lowest possible ever. The bottom has reached :(");
+		throw GradeTooLowException("the grade is the lowest possible ever. The bottom has reached :(");
 	_grade++;
 }
 
@@ -65,6 +65,6 @@ void Bureaucrat::signForm(Form& form) {
 		form.beSigned(*this);
 	} catch (std::exception& e) {
 		std::cout << _NAME <<  " couldn't sign " << form.getName()
-			<< " because " << e.what() << std::endl;
+			<< " because " << e.what() << "." << std::endl;
 	}
 }

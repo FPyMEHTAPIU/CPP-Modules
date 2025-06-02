@@ -9,7 +9,7 @@ RobotomyRequestForm::RobotomyRequestForm(std::string target):
 
 void RobotomyRequestForm::execute(Bureaucrat const& executor) const {
 	if (executor.getGrade() > this->getGradeToExec())
-		throw GradeTooLowException("Your grade is not enough to execute in RobotomyRequestForm");
+		throw GradeTooLowException("the grade is not enough to execute in RobotomyRequestForm");
 
 	std::cout << "Making drilling noises..." << std::endl;
 	if (std::rand() % 2 == 0) {

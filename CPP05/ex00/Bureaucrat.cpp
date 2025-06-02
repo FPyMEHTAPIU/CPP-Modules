@@ -1,11 +1,11 @@
 #include "Bureaucrat.hpp"
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
-	return "The grade is too high, provide something above 1!";
+	return "Bureaucrat::GradeTooHighException";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
-	return "The grade is too low, provide something bellow 150!";
+	return "Bureaucrat::GradeTooLowException";
 }
 
 Bureaucrat::Bureaucrat(): _NAME("Buddy"), _grade(MIN_GRADE) {}
@@ -41,7 +41,7 @@ const int& Bureaucrat::getGrade() const {
 }
 
 std::ostream& operator<<(std::ostream &out, Bureaucrat const& bureaucrat) {
-	out << bureaucrat.getGrade();
+	out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << ".";
 	return out;
 }
 

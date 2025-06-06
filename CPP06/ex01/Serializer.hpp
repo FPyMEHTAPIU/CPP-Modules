@@ -1,11 +1,9 @@
 #pragma once
 #include <iostream>
 #include <cstdint>
+#include "Data.hpp"
 
-struct Data {
-	std::string mes;
-	int num;
-};
+struct Data;
 
 class Serializer {
 	public:

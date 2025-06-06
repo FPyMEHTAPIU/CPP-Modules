@@ -1,75 +1,118 @@
 #include "ScalarConverter.hpp"
 
-bool validateChar(const std::string& value) {
-	if (value[0] < 32 || value[0] > 126)
-		return false;
-	return true;
+static void printImpossible() {
+	std::cout << "char: impossible\n"
+		<< "int: impossible\n"
+		<< "float: impossible\n"
+		<< "double: impossible\n";
 }
 
-bool validateValue(const std::string& value, const t_type& type) {
-	try {
-		switch (type)
-		{
-		case INTVAL:
-			std::stoi(value);
-			return true;
-			break;
-		case FLOATVAL:
-			std::stoi(value);
-			std::stof(value);
-			return true;
-			break;
-		case DOUBLEVAL:
-			std::stoi(value);
-			std::stof(value);
-			std::stod(value);
-			return true;
-			break;
-		
-		default:
-			return true;
+static void checkPrintChar(const double& d) {
+	std::string status;
+
+	if (std::isnan(d) || std::isinf(d) || d < 0 || d > 127)
+		status = "impossible";
+	else if (!isprint(d))
+		status = "Non displayable";
+	else
+		status += static_cast<char>(d);
+	std::cout << "char: " << status << "\n";
+}
+
+static void validateInt(const double& d) {
+	int i;
+
+	if (std::isnan(d) || std::isinf(d)
+		|| d > std::numeric_limits<int>::max()
+		|| d < std::numeric_limits<int>::min())
+	{
+		std::cout << "int: impossible\n";
+	}
+	else {
+		try {
+			i = static_cast<int>(d);
+			std::cout << "int: " << i << "\n";
+		} catch(...) {
+			std::cout << "int: impossible\n";
 		}
-	} catch (std::out_of_range& e) {
-		std::cerr << "Out of range " << e.what() << std::endl;
-		return false;
-	} catch (std::invalid_argument& e) {
-		std::cerr << "Invalid argument " << e.what() << std::endl;
-		return false;
-	} catch (std::exception& e) {
-		std::cerr << e.what() << std::endl;
-		return false;
 	}
-	return false;
 }
 
-t_type checkType(const std::string& value) {
-	if (value.size() == 1) 
-		return CHARVAL;
-	if (value.find('.') != std::string::npos) {
-		if (value.find('f') != std::string::npos)
-			return FLOATVAL;
-		return DOUBLEVAL;
+static void validateFloat(const double& d, t_numtype type) {
+	float f;
+	
+	if (type == FLOATVAL) {
+		if (d > std::numeric_limits<float>::max()
+			|| d < std::numeric_limits<float>::min())
+		{
+			std::cout << "float: impossible\n";
+		}
+		else {
+			try {
+				f = static_cast<float>(d);
+				std::cout << "float: " << std::setprecision(1) << f << "f\n";
+			} catch (...) {
+				std::cout << "float: impossible\n";
+			}
+		}
 	}
-	return INTVAL;
+	else {
+		if (d > std::numeric_limits<double>::max()
+			|| d < std::numeric_limits<double>::min())
+		{
+			std::cout << "double: impossible\n";
+		}
+		else {
+			try {
+				std::cout << "double: " << std::setprecision(1) << d << "\n";
+			} catch (...) {
+				std::cout << "double: impossible\n";
+			}
+		}
+	}
+	
+}
+
+static void checkPrintNumber(const double& d, t_numtype type) {
+	switch (type)
+	{
+	case INTVAL:
+		validateInt(d);
+		break;
+	case FLOATVAL:
+		validateFloat(d, type);
+		break;
+	case DOUBLEVAL:
+		validateFloat(d, type);
+		break;
+	default:
+		break;
+	}
 }
 
 void ScalarConverter::convert(const std::string& value) {
-	t_type type = checkType(value);
+	double d;
 
-	if (!validateValue(value, type))
-		return ;
-	std::string charValue;
-	if (validateChar(value))
-		charValue += static_cast<char>(static_cast<int>(value[0]));
-	else
-		charValue = "Non displayable";
-
-	int i = std::stoi(value);
-	float f = std::stof(value);
-	double d = std::stod(value);
-	std::cout << "char: " << charValue << "\n"
-		<< "int: " << i << "\n";
+	if (value == "-inf" || value == "-inff") {
+		d = -std::numeric_limits<double>::infinity();
+	} else if (value == "+inf" || value == "+inff"
+		|| value == "inf" || value == "inff") {
+		d = std::numeric_limits<double>::infinity();
+	} else if (value == "nan" || value == "nanf") {
+		d = std::numeric_limits<double>::quiet_NaN();
+	} else if (value.size() == 1) {
+		d = static_cast<double>(value[0]);
+	} else {
+		try {
+			d = std::stod(value);
+		} catch (std::exception&) {
+			printImpossible();
+			return;
+		}
+	}
+	checkPrintChar(d);
+	checkPrintNumber(d, INTVAL);
 	std::cout << std::fixed;
-	std::cout << "float: " << std::setprecision(1) << f << "f" << "\n";
-	std::cout << "double: " << std::setprecision(1) << d << std::endl;
+	checkPrintNumber(d, FLOATVAL);
+	checkPrintNumber(d, DOUBLEVAL);
 }

@@ -2,16 +2,14 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <limits>
+#include <cmath>
 
-typedef enum e_type {
-	CHARVAL,
+typedef enum e_numtype {
 	INTVAL,
 	FLOATVAL,
 	DOUBLEVAL,
-	INF_POS,
-	INF_NEG,
-	NAN
-}	t_type;
+}	t_numtype;
 
 class ScalarConverter {
 	private:

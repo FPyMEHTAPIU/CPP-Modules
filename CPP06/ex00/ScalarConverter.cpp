@@ -16,7 +16,10 @@ static void checkPrintChar(const double& d) {
 		status = "Non displayable";
 	else
 		status += static_cast<char>(d);
-	std::cout << "char: " << status << "\n";
+	if (status.size() == 1)
+		std::cout << "char: '" << status << "'\n";
+	else
+		std::cout << "char: " << status << "\n";
 }
 
 static void validateInt(const double& d) {
@@ -40,10 +43,11 @@ static void validateInt(const double& d) {
 
 static void validateFloat(const double& d, t_numtype type) {
 	float f;
-	
+
 	if (type == FLOATVAL) {
-		if (d > std::numeric_limits<float>::max()
-			|| d < std::numeric_limits<float>::min())
+		if (!std::isinf(d) &&
+			(d > std::numeric_limits<float>::max() ||
+				d < std::numeric_limits<float>::lowest()))
 		{
 			std::cout << "float: impossible\n";
 		}
@@ -57,8 +61,9 @@ static void validateFloat(const double& d, t_numtype type) {
 		}
 	}
 	else {
-		if (d > std::numeric_limits<double>::max()
-			|| d < std::numeric_limits<double>::min())
+		if (!std::isinf(d) &&
+			(d > std::numeric_limits<double>::max() || 
+				d < std::numeric_limits<double>::lowest()))
 		{
 			std::cout << "double: impossible\n";
 		}
@@ -100,7 +105,7 @@ void ScalarConverter::convert(const std::string& value) {
 		d = std::numeric_limits<double>::infinity();
 	} else if (value == "nan" || value == "nanf") {
 		d = std::numeric_limits<double>::quiet_NaN();
-	} else if (value.size() == 1) {
+	} else if (value.size() == 1 && !std::isdigit(value[0])) {
 		d = static_cast<double>(value[0]);
 	} else {
 		try {

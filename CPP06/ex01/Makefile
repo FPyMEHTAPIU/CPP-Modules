@@ -9,11 +9,11 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-NAME = convert
+NAME = serializer
 
 SRCS = \
 	main.cpp \
-	ScalarConverter.cpp
+	Serializer.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -26,7 +26,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(BLUE)🛠  Compiling convert... 🛠$(DEF_COLOR)"
+	@echo "$(BLUE)🛠  Compiling serializer... 🛠$(DEF_COLOR)"
 	@c++ $(FLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)🥳 Success!🥳$(DEF_COLOR)"
 
@@ -38,7 +38,7 @@ clean:
 	@$(RM) $(OBJS)
 
 fclean: clean
-	@echo "$(RED)🪦 Deleting convert... 🪦$(DEF_COLOR)"
+	@echo "$(RED)🪦 Deleting serializer... 🪦$(DEF_COLOR)"
 	@$(RM) $(NAME)
 	@echo "$(RED)☣️  CLEAR ☣️$(DEF_COLOR)"
 

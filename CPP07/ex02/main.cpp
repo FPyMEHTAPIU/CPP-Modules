@@ -56,14 +56,18 @@ int main() {
 	}
 
 	// 7. Using array with std::string
-	Array<std::string> strArray(3);
-	strArray[0] = "Hello";
-	strArray[1] = "World";
-	strArray[2] = "!";
+	try {
+		Array<std::string> strArray(3);
+		strArray[0] = "Hello";
+		strArray[1] = "World";
+		strArray[2] = "!";
 
-	std::cout << "String array content:" << std::endl;
-	for (unsigned int i = 0; i < strArray.size(); ++i)
-		std::cout << "strArray[" << i << "] = " << strArray[i] << std::endl;
-
+		std::cout << "String array content:" << std::endl;
+		for (unsigned int i = 0; i < strArray.size(); ++i)
+			std::cout << "strArray[" << i << "] = " << strArray[i] << std::endl;
+	} catch (std::exception& e) {
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+	}
+	
 	return 0;
 }

@@ -2,14 +2,14 @@
 
 Span::~Span() {}
 Span::Span(unsigned int n): _N(n) {
-	vec.reserve(_N);
+	_vec.reserve(_N);
 }
 
 void Span::addNumber(int newNum) {
 	try {
-		if (vec.size() == _N)
+		if (_vec.size() == _N)
 			throw std::out_of_range("Vector's max capacity reached!");
-		vec.push_back(newNum);
+		_vec.push_back(newNum);
 	} catch (std::exception& e) {
 		std::cout << "Exception: " << e.what() << std::endl;
 	}
@@ -18,9 +18,9 @@ void Span::addNumber(int newNum) {
 unsigned int Span::shortestSpan() const {
 	unsigned int min = 0;
 
-	if (vec.size() <= 1)
+	if (_vec.size() <= 1)
 		throw std::length_error("Not enough size to find the span");
-	std::vector<int> copy = vec;
+	std::vector<int> copy = _vec;
 	
 	std::sort(copy.begin(), copy.end());
 	for (size_t i = 1; i < copy.size(); ++i) {
@@ -34,14 +34,14 @@ unsigned int Span::shortestSpan() const {
 }
 
 unsigned int Span::longestSpan() const {
-	if (vec.size() <= 1)
+	if (_vec.size() <= 1)
 		throw std::length_error("Not enough size to find the span");
-	std::vector<int> copy = vec;
+	std::vector<int> copy = _vec;
 	
 	std::sort(copy.begin(), copy.end());
 	return (copy.back() - copy.front());
 }
 
-void Span::addManyNumbers() {
-
+const std::vector<int>& Span::getVec() const {
+	return _vec;
 }

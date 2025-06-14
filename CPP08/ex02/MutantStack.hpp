@@ -15,3 +15,5 @@ class MutantStack : public std::stack<T> {
 		iterator begin();
 		iterator end();
 };
+
+#include "MutantStack.tpp"

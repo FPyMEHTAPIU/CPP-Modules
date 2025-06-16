@@ -21,8 +21,16 @@ int main()
 	sp.addNumber(17);
 	sp.addNumber(9);
 	sp.addNumber(11);
-	std::cout << sp.shortestSpan() << std::endl;
-	std::cout << sp.longestSpan() << std::endl;
+	try {
+        std::cout << sp.shortestSpan() << std::endl;
+    } catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+    try {
+        std::cout << sp.longestSpan() << std::endl;
+    } catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
 
 	Span bigSpan(100);
     std::vector<int> vec;
@@ -32,7 +40,15 @@ int main()
     }
     bigSpan.addManyNumbers(vec.begin(), vec.end());
 	stq::println("big span {}", bigSpan.getVec());
-	std::cout << bigSpan.shortestSpan() << std::endl;
-	std::cout << bigSpan.longestSpan() << std::endl;
+    try {
+        std::cout << bigSpan.shortestSpan() << std::endl;
+    } catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+    try {
+        std::cout << bigSpan.longestSpan() << std::endl;
+    } catch (std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
 	return 0;
 }

@@ -3,18 +3,19 @@
 static bool validateDate(const std::string& str) {
 	const int shortMonths[] = {4, 6, 9, 11};
 	size_t start = 0, end = 0;
-	for (int i = 0; end = str.find('-', start) != std::string::npos; ++i) {
+	for (int i = 0; (start = str.find_first_not_of("-", end)) != std::string::npos; ++i) {
 		if (i == 3) {
 			throw(std::invalid_argument("bad input => " + str));
 		}
+		end = str.find('-', start);
 		std::string sub = str.substr(start, end - start);
-		start = end;
-		int year, month, day;
+		int year = 0, month = 0, day = 0;
+		std::cout << sub << std::endl;
 		switch (i)
 		{
 		case 0:
 			year = std::stoi(sub);
-			if ((year < 0 || year > 9999) && sub.length() != 4)
+			if ((year <= 0 || year > 9999) && sub.length() != 4)
 				throw(std::invalid_argument("bad input => " + str));
 			break;
 		case 1:
@@ -56,8 +57,10 @@ bool validateLine(const std::string& str) {
 	return str.empty();
 }
 
-void printMap() {
-
+void printMap(std::map<std::string, float>& container) {
+	for (auto item : container) { // replace auto
+		std::cout << item.first << " => " << item.second << "\n";
+	}
 }
 
 void validateAdd(std::string av, std::map<std::string, float>& container) {
@@ -88,10 +91,11 @@ void splitAdd(const std::string& line, std::map<std::string, float>& container) 
 			value = line.substr(start, end - start);
 	}
 	try {
-		container.emplace(data, std::stof(value));
-	} catch (...) {
-		std::cout << "Incorrect value" << std::endl;
+		if (validateDate(data) && validateValue(value))
+			container.emplace(data, std::stof(value));
+	} catch (std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
 		return ;
 	}
-	std::cout << container.begin()->first << " " << container.begin()->second << std::endl;
+	printMap(container);
 }

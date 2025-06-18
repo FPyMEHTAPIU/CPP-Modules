@@ -15,22 +15,22 @@ static bool validateDate(const std::string& str) {
 		{
 		case 0:
 			year = std::stoi(sub);
-			if ((year <= 0 || year > 9999) && sub.length() != 4)
+			if ((year <= 0 || year > 9999) || sub.length() != 4)
 				throw(std::invalid_argument("bad input => " + str));
 			break;
 		case 1:
 			month = std::stoi(sub);
-			if ((month < 1 || month > 12) && sub.length() != 2)
+			if ((month < 1 || month > 12) || sub.length() != 2)
 				throw(std::invalid_argument("bad input => " + str));
 			break;
 		case 2:
 			day = std::stoi(sub);
-			if ((day < 1 || day > 31) && sub.length() != 2)
+			if ((day < 1 || day > 31) || sub.length() != 2)
 				throw(std::invalid_argument("bad input => " + str));
 			if (month == 2) {
 				if ((year % 4 == 0 && day > 29) || day > 28)
 					throw(std::invalid_argument("bad input => " + str));
-			} else if (std::find(std::begin(shortMonths), std::end(shortMonths), month)) {
+			} else if (std::find(std::begin(shortMonths), std::end(shortMonths), month) != std::end(shortMonths)) {
 				if (month > 30)
 					throw(std::invalid_argument("bad input => " + str));
 			}
@@ -63,11 +63,17 @@ void printMap(std::map<std::string, float>& container) {
 	}
 }
 
-void validateAdd(std::string av, std::map<std::string, float>& container) {
+void validateAdd(std::string av, std::map<std::string, float>& container,
+	const std::map<std::string, float>& database) {
 	std::ifstream fd = std::ifstream(av);
 	if (fd.fail()) {
 		return ;
 	}
+
+	for (auto it : database) {
+		std::cout << it.first << " " << it.second << "\n";
+	}
+	std::cout << std::endl;
 
 	std::string str;
 	while (getline(fd, str)) {

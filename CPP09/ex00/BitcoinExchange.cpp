@@ -3,14 +3,13 @@
 bool validateDate(const std::string& str) {
 	const int shortMonths[] = {4, 6, 9, 11};
 	size_t start = 0, end = 0;
+	int year = 0, month = 0, day = 0;
 	for (int i = 0; (start = str.find_first_not_of("-", end)) != std::string::npos; ++i) {
 		if (i == 3) {
 			throw(std::invalid_argument("bad input => " + str));
 		}
 		end = str.find('-', start);
 		std::string sub = str.substr(start, end - start);
-
-		int year = 0, month = 0, day = 0;
 
 		switch (i)
 		{
@@ -28,8 +27,8 @@ bool validateDate(const std::string& str) {
 			day = std::stoi(sub);
 			if ((day < 1 || day > 31) || sub.length() != 2)
 				throw(std::invalid_argument("bad input => " + str));
-			if (month == 2) {
-				if ((year % 4 == 0 && day > 29) || day > 28)
+			else if (month == 2) {
+				if ((year % 4 == 0 && day > 29) || (year % 4 != 0 && day > 28))
 					throw(std::invalid_argument("bad input => " + str));
 			} else if (std::find(std::begin(shortMonths), std::end(shortMonths), month) != std::end(shortMonths)) {
 				if (month > 30)

@@ -46,7 +46,5 @@ int main(int ac, char** av) {
 	}
 	database = parseDatabase();
 	validateAdd(av[1], container, database);
-	//printMap(container, database);
-	//std::cout << container.size() << std::endl;
 	return 0;
 }

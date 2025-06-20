@@ -44,32 +44,18 @@ bool validateDate(const std::string& str) {
 }
 
 bool validateValue(const std::string& str) {
-	if (str.length() > 4)
-		throw(std::invalid_argument("bad input => " + str));
-	int value = std::stoi(str);
+	int value = 0;
+	try {
+		value = std::stoi(str);
+	} catch (std::out_of_range&) {
+		throw(std::out_of_range("too large a number"));
+	} catch (std::invalid_argument&) {
+		throw(std::invalid_argument("not a number"));
+	}
 	if (value < 0)
 		throw(std::invalid_argument("not a positive number"));
-	else if (value < 0)
-		throw(std::invalid_argument("too large a number"));
 	return true;
 }
-
-// void printMap(const std::map<std::string, float>& container,
-// 	const std::map<std::string, float>& database)
-// {
-// 	for (const std::pair<const std::string, float>& item: container) {
-// 		std::pair<std::string, float> neededDate;
-
-// 		for (const std::pair<const std::string, float>& dbItem: database) {
-// 			if (item.first > dbItem.first)
-// 				break;
-// 			neededDate = item;
-// 		}
-
-// 		std::cout << item.first << " => " <<
-// 			item.second << " = " << item.second * neededDate.second << "\n";
-// 	}
-// }
 
 void validateAdd(std::string av, std::map<std::string, float>& container,
 	const std::map<std::string, float>& database)
@@ -116,19 +102,13 @@ void splitAdd(const std::string& line, std::map<std::string, float>& container,
 
 			container.emplace(date, std::stof(value));
 			
-
 			std::pair<std::string, float> neededDate;
 
 			for (const std::pair<const std::string, float>& dbItem: database) {
 				if (date <= dbItem.first)
 					break;
 				neededDate = dbItem;
-				// std::cout << "dbItem: first = " << dbItem.first
-				// 	<< "\tsecond: " << dbItem.second << std::endl;
 			}
-
-			// std::cout << "neededDate: first = " << neededDate.first
-			// 		<< "\tsecond: " << neededDate.second << std::endl;
 
 			std::cout << date << " => " << value << " = "
 				<< container.find(date)->second * neededDate.second

@@ -1,6 +1,6 @@
 #include "BitcoinExchange.hpp"
 
-static bool validateDate(const std::string& str) {
+bool validateDate(const std::string& str) {
 	const int shortMonths[] = {4, 6, 9, 11};
 	size_t start = 0, end = 0;
 	for (int i = 0; (start = str.find_first_not_of("-", end)) != std::string::npos; ++i) {
@@ -9,8 +9,9 @@ static bool validateDate(const std::string& str) {
 		}
 		end = str.find('-', start);
 		std::string sub = str.substr(start, end - start);
+
 		int year = 0, month = 0, day = 0;
-		std::cout << sub << std::endl;
+
 		switch (i)
 		{
 		case 0:
@@ -42,7 +43,7 @@ static bool validateDate(const std::string& str) {
 	return true;
 }
 
-static bool validateValue(const std::string& str) {
+bool validateValue(const std::string& str) {
 	if (str.length() > 4)
 		throw(std::invalid_argument("bad input => " + str));
 	int value = std::stoi(str);
@@ -53,37 +54,44 @@ static bool validateValue(const std::string& str) {
 	return true;
 }
 
-bool validateLine(const std::string& str) {
-	return str.empty();
-}
+// void printMap(const std::map<std::string, float>& container,
+// 	const std::map<std::string, float>& database)
+// {
+// 	for (const std::pair<const std::string, float>& item: container) {
+// 		std::pair<std::string, float> neededDate;
 
-void printMap(std::map<std::string, float>& container) {
-	for (auto item : container) { // replace auto
-		std::cout << item.first << " => " << item.second << "\n";
-	}
-}
+// 		for (const std::pair<const std::string, float>& dbItem: database) {
+// 			if (item.first > dbItem.first)
+// 				break;
+// 			neededDate = item;
+// 		}
+
+// 		std::cout << item.first << " => " <<
+// 			item.second << " = " << item.second * neededDate.second << "\n";
+// 	}
+// }
 
 void validateAdd(std::string av, std::map<std::string, float>& container,
-	const std::map<std::string, float>& database) {
+	const std::map<std::string, float>& database)
+{
 	std::ifstream fd = std::ifstream(av);
 	if (fd.fail()) {
-		return ;
+		std::cout << "File opening failed" << std::endl;
+		exit(1);
 	}
-
-	for (auto it : database) {
-		std::cout << it.first << " " << it.second << "\n";
-	}
-	std::cout << std::endl;
 
 	std::string str;
+	getline(fd, str);
 	while (getline(fd, str)) {
-		splitAdd(str, container);
+		splitAdd(str, container, database);
 	}
 	fd.close();
 }
 
-void splitAdd(const std::string& line, std::map<std::string, float>& container) {
-	std::string data, value;
+void splitAdd(const std::string& line, std::map<std::string, float>& container,
+	const std::map<std::string, float>& database)
+{
+	std::string date, value;
 	size_t start;
 	size_t end = 0;
 	while ((start = line.find_first_not_of(" ", end)) != std::string::npos)
@@ -92,16 +100,42 @@ void splitAdd(const std::string& line, std::map<std::string, float>& container) 
 		if (line[start] == '|')
 			continue ;
 		if (start == 0)
-			data = line.substr(start, end - start);
+			date = line.substr(start, end - start);
 		else
 			value = line.substr(start, end - start);
 	}
 	try {
-		if (validateDate(data) && validateValue(value))
-			container.emplace(data, std::stof(value));
+		if (validateDate(date) && validateValue(value))
+		{
+			for (const std::pair<std::string, float> item: container) {
+				if (date == item.first) {
+					container.erase(date);
+					break;
+				}
+			}
+
+			container.emplace(date, std::stof(value));
+			
+
+			std::pair<std::string, float> neededDate;
+
+			for (const std::pair<const std::string, float>& dbItem: database) {
+				if (date <= dbItem.first)
+					break;
+				neededDate = dbItem;
+				// std::cout << "dbItem: first = " << dbItem.first
+				// 	<< "\tsecond: " << dbItem.second << std::endl;
+			}
+
+			// std::cout << "neededDate: first = " << neededDate.first
+			// 		<< "\tsecond: " << neededDate.second << std::endl;
+
+			std::cout << date << " => " << value << " = "
+				<< container.find(date)->second * neededDate.second
+				<< std::endl;
+		}
 	} catch (std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
 		return ;
 	}
-	printMap(container);
 }

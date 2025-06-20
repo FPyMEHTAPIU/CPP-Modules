@@ -18,7 +18,6 @@ static std::map<std::string, float> parseDatabase() {
 			exit(1);
 		}
 		date = line.substr(0, delimeter);
-		std::cout << date.length() << " " << date << std::endl;
 		if (date.length() != 10) {
 			std::cout << "DB is in wrong format" << std::endl;
 			fd.close();
@@ -47,5 +46,7 @@ int main(int ac, char** av) {
 	}
 	database = parseDatabase();
 	validateAdd(av[1], container, database);
+	//printMap(container, database);
+	//std::cout << container.size() << std::endl;
 	return 0;
 }

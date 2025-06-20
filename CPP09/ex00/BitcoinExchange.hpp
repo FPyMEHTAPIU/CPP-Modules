@@ -6,8 +6,11 @@
 #include <string>
 #include <algorithm>
 
-bool validateLine(const std::string& str);
-void printMap(std::map<std::string, float>& container);
+// void printMap(const std::map<std::string, float>& container,
+// 	const std::map<std::string, float>& database);
 void validateAdd(std::string av, std::map<std::string, float>& container,
 	const std::map<std::string, float>& database);
-void splitAdd(const std::string& line, std::map<std::string, float>& container);
+void splitAdd(const std::string& line, std::map<std::string, float>& container,
+	const std::map<std::string, float>& database);
+bool validateDate(const std::string& str);
+bool validateValue(const std::string& str);

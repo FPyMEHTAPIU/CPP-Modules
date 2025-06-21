@@ -1,16 +1,16 @@
 #include "RPN.hpp"
 
-static std::vector<std::string> split(const std::string& str, char del) {
-    std::vector<std::string> vec;
+static std::list<std::string> split(const std::string& str, char del) {
+    std::list<std::string> lst;
 	size_t start;
 	size_t end = 0;
 
 	while ((start = str.find_first_not_of(del, end)) != std::string::npos)
 	{
 		end = str.find(del, start);
-		vec.push_back(str.substr(start, end - start));
+		lst.push_back(str.substr(start, end - start));
 	}
-	return vec;
+	return lst;
 }
 
 static bool isOperator(const std::string& arg) {
@@ -27,9 +27,9 @@ static void validateArg(const std::string& arg) {
         throw(std::out_of_range("Number is out of range"));
 }
 
-static void countArgs(const std::vector<std::string>& vec) {
+static void countArgs(const std::list<std::string>& lst) {
     int nums = 0, operators = 0;
-    for (const std::string& arg: vec) {
+    for (const std::string& arg: lst) {
         validateArg(arg);
         if (isOperator(arg))
             operators++;
@@ -78,13 +78,13 @@ static void calculate(std::vector<int>& result, char action) {
 }
 
 void RPN(const std::string& arg) {
-    std::vector<std::string> vec = split(arg, ' ');
-    if (vec.size() < 3)
+    std::list<std::string> lst = split(arg, ' ');
+    if (lst.size() < 3)
         throw(std::invalid_argument("Not enough arguments"));
 
-    countArgs(vec);
+    countArgs(lst);
     std::vector<int> result;
-    for (std::vector<std::string>::iterator arg = vec.begin(); arg != vec.end(); arg++) {
+    for (std::list<std::string>::iterator arg = lst.begin(); arg != lst.end(); arg++) {
         if (*arg == "-" || *arg == "+" || *arg == "*" || *arg == "/")
             calculate(result, (*arg)[0]);
         else if (result.size() > 3) {

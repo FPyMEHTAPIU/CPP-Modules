@@ -42,22 +42,35 @@ static void countArgs(const std::vector<std::string>& vec) {
         throw(std::invalid_argument("Wrong number of operators"));
 }
 
-void calculate(int& result, int arg2, char action) {
+static void calculate(std::vector<int>& result, char action) {
+    if (result.size() > 3)
+        throw(std::invalid_argument("Not possible to perform a calculation"));
+    int arg1;
+    int arg2;
+    if (result.size() == 3) {
+        arg1 = result.at(1);
+        arg2 = result.at(2);
+    } else {
+        arg1 = result.at(0);
+        arg2 = result.at(1);
+    }
+    for (int i = 0; i < 2; ++i)
+        result.pop_back();
     switch (action)
     {
     case '-':
-        result -= arg2;
+        result.push_back(arg1 - arg2);
         break;
     case '+':
-        result += arg2;
+        result.push_back(arg1 + arg2);
         break;
     case '*':
-        result *= arg2;
+        result.push_back(arg1 * arg2);
         break;
     case '/':
         if (arg2 == 0)
             throw(std::invalid_argument("Division by 0"));
-        result /= arg2;
+        result.push_back(arg1 / arg2);
         break ;
     default:
         break;
@@ -69,17 +82,19 @@ void RPN(const std::string& arg) {
     if (vec.size() < 3)
         throw(std::invalid_argument("Not enough arguments"));
 
-    int result = 0;
-    int arg2;
-
     countArgs(vec);
-    result = std::stoi(*vec.begin());
-    for (std::vector<std::string>::iterator arg = vec.begin() + 1; arg != vec.end(); arg++) {
+    std::vector<int> result;
+    for (std::vector<std::string>::iterator arg = vec.begin(); arg != vec.end(); arg++) {
         if (*arg == "-" || *arg == "+" || *arg == "*" || *arg == "/")
-            calculate(result, arg2, (*arg)[0]);
+            calculate(result, (*arg)[0]);
+        else if (result.size() > 3) {
+            throw(std::invalid_argument("To many numbers in a row"));
+        }
         else
-            arg2 = std::stoi(*arg);
+            result.push_back(std::stoi((*arg)));
     }
 
-    std::cout << result << std::endl;
+    if (result.size() != 1)
+        throw(std::invalid_argument("Incorrect number of args"));
+    std::cout << result.at(0) << std::endl;
 }

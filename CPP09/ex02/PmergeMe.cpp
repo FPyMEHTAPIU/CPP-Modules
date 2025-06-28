@@ -1,5 +1,18 @@
 #include "PmergeMe.hpp"
 
+std::vector<std::string> split(const std::string& str, char del) {
+    std::vector<std::string> vec;
+	size_t start;
+	size_t end = 0;
+
+	while ((start = str.find_first_not_of(del, end)) != std::string::npos)
+	{
+		end = str.find(del, start);
+		vec.push_back(str.substr(start, end - start));
+	}
+	return vec;
+}
+
 std::vector<size_t> generateJacobsthal(size_t size) {
     std::vector<size_t> jacob;
     jacob.push_back(0);
@@ -29,9 +42,9 @@ void dequeSort(std::deque<int>& deq) {
     std::cout << "Time to process a range of " << deq.size() << " elements with std::deque : " << duration << " us" << std::endl;
 }
 
-void pmegreMe(char **av) {
-    std::vector<int> vec = validateAdd<std::vector<int>>(av);
-    std::deque<int> deq = validateAdd<std::deque<int>>(av);
+void pmegreMe(char **av, int ac) {
+    std::vector<int> vec = validateAdd<std::vector<int>>(av, ac);
+    std::deque<int> deq = validateAdd<std::deque<int>>(av, ac);
 
     printContainer("Before: ", vec);
     vectorSort(vec);

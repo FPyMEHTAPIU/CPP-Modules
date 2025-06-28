@@ -6,7 +6,7 @@ int main(int ac, char **av) {
         return 1;
     }
     try {
-        pmegreMe(av + 1);
+        pmegreMe(av + 1, ac);
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }

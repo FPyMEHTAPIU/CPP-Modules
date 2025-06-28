@@ -9,9 +9,9 @@ std::vector<size_t> generateJacobsthal(size_t size);
 void vectorSort(std::vector<int>& vec);
 void dequeSort(std::deque<int>& deq);
 
-template <template <typename, typename> class T>
-T<int, std::allocator<int>> validateAdd(char **av) {
-   T<int, std::allocator<int>> container;
+template <typename T>
+T validateAdd(char **av) {
+   T container;
 
     for (int i = 0; av[i]; ++i) {
         int num = std::stoi(av[i]);
@@ -23,8 +23,8 @@ T<int, std::allocator<int>> validateAdd(char **av) {
     return container;
 }
 
-template <template <typename, typename> class T>
-void printContainer(const std::string& prefix, const T<int, std::allocator<int>>& container) {
+template <typename T>
+void printContainer(const std::string& prefix, const T& container) {
     std::cout << prefix;
     for (size_t i = 0; i < container.size(); ++i) {
         std::cout << container[i];
@@ -33,11 +33,11 @@ void printContainer(const std::string& prefix, const T<int, std::allocator<int>>
     std::cout << std::endl;
 }
 
-template <template <typename, typename> class T>
-void sortFordJohnson(T<int, std::allocator<int>>& container) {
+template <typename T>
+void sortFordJohnson(T& container) {
 	if (container.size() <= 1) return;
 
-	T<int, std::allocator<int>> min, max;
+	T min, max;
 
 	size_t i = 0;
     for (; i + 1 < container.size(); i += 2) {
@@ -54,21 +54,21 @@ void sortFordJohnson(T<int, std::allocator<int>>& container) {
 
 	sortFordJohnson(max);
 
-	T<int, std::allocator<int>> res = max;
+	T res = max;
 	std::vector<size_t> jacobNumbers = generateJacobsthal(min.size());
 	std::vector<bool> isInserted(min.size(), false);
 
 	for (size_t j = 0; j < jacobNumbers.size() && jacobNumbers[j - 1] < min.size(); ++j) {
 		size_t index = jacobNumbers[j];
 		if (index < min.size()) {
-			typename T<int, std::allocator<int>>::iterator pos = std::lower_bound(res.begin(), res.end(), min[index]);
+			typename T::iterator pos = std::lower_bound(res.begin(), res.end(), min[index]);
 			res.insert(pos, min[index]);
 			isInserted[index] = true;
 		}
 	}
 	for (size_t j = 0; j < min.size(); j++) {
 		if (!isInserted[j]) {
-			typename T<int, std::allocator<int>>::iterator pos = std::lower_bound(res.begin(), res.end(), min[j]);
+			typename T::iterator pos = std::lower_bound(res.begin(), res.end(), min[j]);
 			res.insert(pos, min[j]);
 			isInserted[j] = true;
 		}

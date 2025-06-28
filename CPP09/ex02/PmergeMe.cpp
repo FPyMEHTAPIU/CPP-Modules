@@ -26,12 +26,12 @@ void dequeSort(std::deque<int>& deq) {
     sortFordJohnson(deq);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration<double, std::micro>(end - start).count();
-    std::cout << "Time to process a range of " << deq.size() << " elements with std::vector : " << duration << " us" << std::endl;
+    std::cout << "Time to process a range of " << deq.size() << " elements with std::deque : " << duration << " us" << std::endl;
 }
 
 void pmegreMe(char **av) {
-    std::vector<int> vec = validateAdd<std::vector>(av);
-    std::deque<int> deq = validateAdd<std::deque>(av);
+    std::vector<int> vec = validateAdd<std::vector<int>>(av);
+    std::deque<int> deq = validateAdd<std::deque<int>>(av);
 
     printContainer("Before: ", vec);
     vectorSort(vec);

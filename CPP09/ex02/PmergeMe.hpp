@@ -37,9 +37,16 @@ T validateAdd(char **av, int ac) {
 template <typename T>
 void printContainer(const std::string& prefix, const T& container) {
 	std::cout << prefix;
-	for (size_t i = 0; i < container.size(); ++i) {
-		std::cout << container[i];
-		if (i + 1 < container.size()) std::cout << " ";
+	if (container.size() > 5) {
+		for (size_t i = 0; i < 4; ++i) {
+			std::cout << container[i] << " ";
+		}
+		std::cout << "[...]";
+	} else {
+		for (size_t i = 0; i < container.size(); ++i) {
+			std::cout << container[i];
+			if (i + 1 < container.size()) std::cout << " ";
+		}
 	}
 	std::cout << std::endl;
 }

@@ -4,6 +4,8 @@ bool validateDate(const std::string& str) {
 	const int shortMonths[] = {4, 6, 9, 11};
 	size_t start = 0, end = 0;
 	int year = 0, month = 0, day = 0;
+	if (str.empty())
+		return false;
 	for (int i = 0; (start = str.find_first_not_of("-", end)) != std::string::npos; ++i) {
 		if (i == 3) {
 			throw(std::invalid_argument("bad input => " + str));
@@ -14,24 +16,37 @@ bool validateDate(const std::string& str) {
 		switch (i)
 		{
 		case 0:
-			year = std::stoi(sub);
+			try {
+				year = std::stoi(sub);
+			} catch (...) {
+				throw(std::invalid_argument("bad input => " + str));
+			}
 			if ((year <= 0 || year > 9999) || sub.length() != 4)
 				throw(std::invalid_argument("bad input => " + str));
 			break;
 		case 1:
-			month = std::stoi(sub);
+			try {
+				month = std::stoi(sub);
+			} catch (...) {
+				throw(std::invalid_argument("bad input => " + str));
+			}
 			if ((month < 1 || month > 12) || sub.length() != 2)
 				throw(std::invalid_argument("bad input => " + str));
 			break;
 		case 2:
-			day = std::stoi(sub);
+			try {
+				day = std::stoi(sub);
+			} catch (...) {
+				throw(std::invalid_argument("bad input => " + str));
+			}
+			
 			if ((day < 1 || day > 31) || sub.length() != 2)
 				throw(std::invalid_argument("bad input => " + str));
 			else if (month == 2) {
 				if ((year % 4 == 0 && day > 29) || (year % 4 != 0 && day > 28))
 					throw(std::invalid_argument("bad input => " + str));
 			} else if (std::find(std::begin(shortMonths), std::end(shortMonths), month) != std::end(shortMonths)) {
-				if (month > 30)
+				if (day > 30)
 					throw(std::invalid_argument("bad input => " + str));
 			}
 			break;
@@ -43,9 +58,9 @@ bool validateDate(const std::string& str) {
 }
 
 bool validateValue(const std::string& str) {
-	int value = 0;
+	float value = 0;
 	try {
-		value = std::stoi(str);
+		value = std::stof(str);
 	} catch (std::out_of_range&) {
 		throw(std::out_of_range("too large a number"));
 	} catch (std::invalid_argument&) {
@@ -92,26 +107,25 @@ void splitAdd(const std::string& line, std::map<std::string, float>& container,
 	try {
 		if (validateDate(date) && validateValue(value))
 		{
-			for (const std::pair<std::string, float> item: container) {
-				if (date == item.first) {
-					container.erase(date);
-					break;
-				}
-			}
-
+			container.erase(date);
 			container.emplace(date, std::stof(value));
 			
-			std::pair<std::string, float> neededDate;
-
-			for (const std::pair<const std::string, float>& dbItem: database) {
-				if (date <= dbItem.first)
-					break;
-				neededDate = dbItem;
+			// TODO: replace auto
+			auto it = database.lower_bound(date);
+			if (it != database.end() && it->first == date) {
+				std::cout << date << " => " << value << " = "
+					<< std::stof(value) * it->second << std::endl;
+			} else {
+				if (it == database.begin()) {
+					std::cout << date << " => " << value << " = 0" << std::endl;
+				} else {
+					--it;
+					std::cout << date << " => " << value << " = "
+						<< std::stof(value) * it->second << std::endl;
+				}
 			}
-
-			std::cout << date << " => " << value << " = "
-				<< container.find(date)->second * neededDate.second
-				<< std::endl;
+		} else {
+			throw(std::invalid_argument("bad input => " + line));
 		}
 	} catch (std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;

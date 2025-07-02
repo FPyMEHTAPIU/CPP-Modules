@@ -80,7 +80,7 @@ void sortFordJohnson(T& container) {
 	for (size_t j = 0; j < jacobNumbers.size(); ++j) {
 		size_t index = jacobNumbers[j];
 		if (index < min.size() && !alreadyUsed[index]) {
-			auto pos = std::lower_bound(res.begin(), res.end(), min[index]);
+			typename T::iterator pos = std::lower_bound(res.begin(), res.end(), min[index]);
 			res.insert(pos, min[index]);
 			isInserted[index] = true;
 			alreadyUsed[index] = true;

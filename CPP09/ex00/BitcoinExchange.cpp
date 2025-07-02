@@ -110,8 +110,7 @@ void splitAdd(const std::string& line, std::map<std::string, float>& container,
 			container.erase(date);
 			container.emplace(date, std::stof(value));
 			
-			// TODO: replace auto
-			auto it = database.lower_bound(date);
+			std::map<std::string, float>::const_iterator it = database.lower_bound(date);
 			if (it != database.end() && it->first == date) {
 				std::cout << date << " => " << value << " = "
 					<< std::stof(value) * it->second << std::endl;

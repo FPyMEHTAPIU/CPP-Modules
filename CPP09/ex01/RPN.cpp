@@ -42,17 +42,21 @@ static void countArgs(const std::list<std::string>& lst) {
         throw(std::invalid_argument("Wrong number of operators"));
 }
 
-static void calculate(std::vector<int>& result, char action) {
+static void calculate(std::list<int>& result, char action) {
     if (result.size() > 3)
         throw(std::invalid_argument("Not possible to perform a calculation"));
     int arg1;
     int arg2;
+    std::list<int>::iterator it = result.begin();
     if (result.size() == 3) {
-        arg1 = result.at(1);
-        arg2 = result.at(2);
+        std::advance(it, 1);
+        arg1 = *it;
+        std::advance(it, 1);
+        arg2 = *it;
     } else {
-        arg1 = result.at(0);
-        arg2 = result.at(1);
+        arg1 = *it;
+        std::advance(it, 1);
+        arg2 = *it;
     }
     for (int i = 0; i < 2; ++i)
         result.pop_back();
@@ -83,7 +87,7 @@ void RPN(const std::string& arg) {
         throw(std::invalid_argument("Not enough arguments"));
 
     countArgs(lst);
-    std::vector<int> result;
+    std::list<int> result;
     for (std::list<std::string>::iterator arg = lst.begin(); arg != lst.end(); arg++) {
         if (*arg == "-" || *arg == "+" || *arg == "*" || *arg == "/")
             calculate(result, (*arg)[0]);
@@ -96,5 +100,5 @@ void RPN(const std::string& arg) {
 
     if (result.size() != 1)
         throw(std::invalid_argument("Incorrect number of args"));
-    std::cout << result.at(0) << std::endl;
+    std::cout << *result.begin() << std::endl;
 }

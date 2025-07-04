@@ -58,9 +58,16 @@ bool validateDate(const std::string& str) {
 }
 
 bool validateValue(const std::string& str) {
-	float value = 0;
+	double value = 0;
 	try {
-		value = std::stof(str);
+		value = std::stod(str);
+		if (value > 1000.0)
+			throw(std::out_of_range("too large a number"));
+		if (value == 1000) {
+			size_t dot = str.find('.');
+			if (str.find_first_not_of("0", dot) != std::string::npos)
+				throw(std::out_of_range("too large a number"));
+		}
 	} catch (std::out_of_range&) {
 		throw(std::out_of_range("too large a number"));
 	} catch (std::invalid_argument&) {
@@ -83,6 +90,12 @@ void validateAdd(std::string av, std::map<std::string, float>& container,
 
 	std::string str;
 	getline(fd, str);
+	if (str != "date | value") {
+		database.clear();
+		fd.close();
+		std::cout << "incorrect title => " + str << std::endl;
+		exit(1);
+	}
 	while (getline(fd, str)) {
 		splitAdd(str, container, database);
 	}

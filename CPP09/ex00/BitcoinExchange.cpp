@@ -72,10 +72,11 @@ bool validateValue(const std::string& str) {
 }
 
 void validateAdd(std::string av, std::map<std::string, float>& container,
-	const std::map<std::string, float>& database)
+	std::map<std::string, float>& database)
 {
 	std::ifstream fd = std::ifstream(av);
 	if (fd.fail()) {
+		database.clear();
 		std::cout << "File opening failed" << std::endl;
 		exit(1);
 	}

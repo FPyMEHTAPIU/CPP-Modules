@@ -30,6 +30,7 @@ static std::map<std::string, float> parseDatabase() {
 			database.emplace(date, value);
 		} catch (std::exception& e) {
 			std::cout << "Exception: " << e.what() << std::endl;
+			break;
 		}
 	}
 	fd.close();

@@ -45,7 +45,8 @@ void printContainer(const std::string& prefix, const T& container) {
 	} else {
 		for (size_t i = 0; i < container.size(); ++i) {
 			std::cout << container[i];
-			if (i + 1 < container.size()) std::cout << " ";
+			if (i + 1 < container.size())
+				std::cout << " ";
 		}
 	}
 	std::cout << std::endl;

@@ -48,6 +48,25 @@ TESTS=(
   "3 -3 +|0"
   "3 -4 *|-12"
   "3 0 /|Error"
+  "1 - 2 3 + 5 +|Error"
+  "- + 5 + 4 3 7|Error"
+  "1 2 * 2 / 2 + 5 * 6 - 1 3 * - 4 5 * * 8 /|15"
+  "8 9 * 9 - 9 - 9 - 4 - 1 +|42"
+  "9 8 * 4 * 4 / 2 + 9 - 8 - 8 - 1 - 6 -|42"
+  "8 2 4 1 9 3 / + - * +|8"
+  "3 4 +|7"
+  "5 1 2 + 4 * + 3 -|14"
+  "9 3 / 2 + 4 *|20"
+  "7 2 3 * -|1"
+  "2 3 + 4 *|20"
+  "4 2 + 3 5 1 - * +|18"
+  "5 9 8 + 4 6 * * 7 + *|2075"
+  "3 5 8 * 7 + *|141"
+  "1 2 + 3 4 + *|21"
+  "2 3 1 * + 9 -|-4"
+  "4 2 3 5 1 - + * +|18"
+  "3 4 * 2 5 * +|22"
+  "6 2 / 3 - 4 2 * +|8"
 )
 
 pass=0
@@ -58,11 +77,19 @@ for test in "${TESTS[@]}"; do
   input="${test%%|*}"
   expected="${test##*|}"
 
+  # Run the program
   output=$($PROGRAM "$input" 2>&1 | tr -d '\r' | xargs)
 
   if [[ "$output" == "$expected" ]]; then
     echo "[PASS] '$input' => $output"
     ((pass++))
+
+    # Run valgrind only on passing test
+    # valgrind_output=$(valgrind --leak-check=full --error-exitcode=123 $PROGRAM "$input" > /dev/null 2>&1)
+    # if [ $? -eq 123 ]; then
+    #   echo "  [VALGRIND] Memory error detected!"
+    #   ((fail++))
+    # fi
   else
     echo "[FAIL] '$input' => got: '$output', expected: '$expected'"
     ((fail++))

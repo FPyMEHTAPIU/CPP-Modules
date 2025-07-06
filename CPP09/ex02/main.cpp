@@ -7,12 +7,9 @@ int main(int ac, char **av) {
     }
     try {
         pmegreMe(av + 1, ac);
-    } catch (std::invalid_argument&) {
-        std::cerr << "Not a number provided" << std::endl;
-    } catch (std::out_of_range&) {
-        std::cerr << "Number is out of range" << std::endl;
-    }catch (std::exception& e) {
-        std::cerr << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "Error" << std::endl;
     }
+    
     return 0;
 }
